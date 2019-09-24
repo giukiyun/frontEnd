@@ -13,10 +13,11 @@
           <td>{{user.name}}</td>
           <td>{{user.phone}}</td>
           <td>{{user.email}}</td>
-          <td></td>
+          <td><router-link :to="/user/ + user.id">详情</router-link></td>
         </tr>
       </tbody>
     </table>
+     <router-view />
   </div>
 </template>
 
