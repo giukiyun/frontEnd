@@ -1,5 +1,6 @@
 <template>
   <div class="details container">
+    <Alert v-if="alert" :msg="alert"></Alert>
     <h1 class="page-header">添加用户</h1>
     <form @submit="addUser">
       <div class="well">
@@ -23,12 +24,17 @@
 </template>
 
 <script>
+import Alert from './Alert'
 export default {
   name: "updateUser",
   data() {
     return {
-      user: {}
+      user: {},
+      alert: ""
     };
+  },
+  components: {
+    Alert
   },
   methods: {
     addUser() {
@@ -43,7 +49,7 @@ export default {
         };
         const axios = require("axios");
         axios
-          .post("http://localhost:3000/users/",newUser)
+          .post("http://localhost:3000/users/", newUser)
           .then(res => {
             me.$router.push({
               path: "/",

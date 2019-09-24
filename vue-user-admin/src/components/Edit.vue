@@ -1,5 +1,6 @@
 <template>
   <div class="details container">
+    <Alert v-if="alert" :msg="alert"></Alert>
     <h1 class="page-header">编辑用户</h1>
     <form @submit="updateUser">
       <div class="well">
@@ -23,12 +24,17 @@
 </template>
 
 <script>
+import Alert from "./Alert";
 export default {
   name: "updateUser",
   data() {
     return {
-      user: {}
+      user: {},
+      alert: ""
     };
+  },
+  components: {
+    Alert
   },
   methods: {
     fetchUser(id) {
@@ -47,7 +53,7 @@ export default {
     updateUser() {
       let me = this;
       if (!this.user.name || !this.user.phone || !this.user.email) {
-        this.alert="请添加对应的信息！";
+        this.alert = "请添加对应的信息！";
       } else {
         let updateUser = {
           name: this.user.name,

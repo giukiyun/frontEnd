@@ -1,5 +1,6 @@
 <template>
   <div class="user container">
+    <Alert v-if="alert" :msg="alert"></Alert>
     <h1 class="page-header">用户管理</h1>
     <table class="table table-striped">
       <thead>
@@ -13,22 +14,28 @@
           <td>{{user.name}}</td>
           <td>{{user.phone}}</td>
           <td>{{user.email}}</td>
-          <td><router-link :to="/user/ + user.id">详情</router-link></td>
+          <td>
+            <router-link :to="/user/ + user.id">详情</router-link>
+          </td>
         </tr>
       </tbody>
     </table>
-     <router-view />
+    <router-view />
   </div>
 </template>
 
 <script>
+import Alert from './Alert'
 export default {
   name: "User",
   data() {
-    return{
+    return {
       users: [],
-    }
-    
+      alert: ""
+    };
+  },
+  components:{
+    Alert
   },
   methods: {
     fetchUser() {
@@ -45,7 +52,10 @@ export default {
         });
     }
   },
-  created(){
+  created() {
+    if(this.$route.query.alert){
+      this.alert=this.$route.query.alert;
+    }
     this.fetchUser();
   }
 };
