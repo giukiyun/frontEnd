@@ -29,9 +29,7 @@ router.post("/register", (req, res) => {
         })
         .then((user) => {
             if (user) {
-                return res.status(400).json({
-                    email: "邮箱已被注册!"
-                })
+                return res.status(400).json("邮箱已被注册!")
             } else {
                 const avatar = gravatar.url(req.body.email, {
                     s: '200',
@@ -42,13 +40,16 @@ router.post("/register", (req, res) => {
                     name: req.body.name,
                     email: req.body.email,
                     avatar,
-                    password: req.body.password
+                    password: req.body.password,
+                    identity: req.body.identity
                 });
 
                 bcrypt.genSalt(10, (err, salt) => {
                     bcrypt.hash(newUser.password, salt, (err, hash) => {
                         if (err) throw err;
+
                         newUser.password = hash;
+
                         newUser
                             .save()
                             .then(user => res.json(user))
@@ -63,7 +64,6 @@ router.post("/register", (req, res) => {
 //$route POST api/users/login
 //@desc 返回token jwt password
 //@access public
-
 router.post('/login', (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
@@ -80,7 +80,9 @@ router.post('/login', (req, res) => {
             if (isMatch) {
                 const rule = {
                     id: user.id,
-                    name: user.name
+                    name: user.name,
+                    avatar: user.avatar,
+                    identity: user.identity
                 };
                 jwt.sign(rule, keys.secretOrKey, {
                     expiresIn: 3600
@@ -113,7 +115,8 @@ router.get(
         res.json({
             id: req.user.id,
             name: req.user.name,
-            email: req.user.email
+            email: req.user.email,
+            identity: req.user.identity
         });
     }
 );
