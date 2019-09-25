@@ -1,27 +1,27 @@
 //@login & register
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const bcrypt = require("bcrypt");
-const gravatar = require("gravatar");
-const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+const gravatar = require('gravatar');
+const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
 
-const User = require("../../models/user");
+const User = require('../../models/user');
 
 //$route GET api/users/test
 //@desc 返回请求的json数据
 //@access public
-router.get("/test", (req, res) => {
+router.get('/test', (req, res) => {
     res.json({
-        msg: "login works"
+        msg: 'login works'
     })
 })
 
 //$route POST api/users/element-admin
 //@desc 返回请求的json数据
 //@access public
-router.post("/register", (req, res) => {
+router.post('/register', (req, res) => {
     // console.log(req.body);
     //查询数据库中是否拥有邮箱
     User.findOne({
@@ -29,7 +29,7 @@ router.post("/register", (req, res) => {
         })
         .then((user) => {
             if (user) {
-                return res.status(400).json("邮箱已被注册!")
+                return res.status(400).json('邮箱已被注册!')
             } else {
                 const avatar = gravatar.url(req.body.email, {
                     s: '200',
@@ -94,10 +94,10 @@ router.post('/login', (req, res) => {
                     });
                 });
                 // res.json({
-                //     mag: "success"
+                //     mag: 'success'
                 // });
             } else {
-                return res.status(400).json("密码错误！")
+                return res.status(400).json('密码错误！')
             }
         });
     });
