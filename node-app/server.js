@@ -4,6 +4,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 //引入bodyParser
 const bodyParser =require("body-parser");
+
+const passport = require('passport');
 //实例化一个app
 const app = express();
 
@@ -21,10 +23,16 @@ app.use(bodyParser.json());
 mongoose.connect(db)
     .then(() => console.log("MongoDB Connected"))
     .catch(err => console.log(err));
+
+// passport 初始化
+app.use(passport.initialize());
+//单独使用一个文件定义passport，实现代码抽离
+require('./config/passport')(passport);
+
 //设置路由
-app.get("/", (req, res) => {
-    res.send("Giu");
-})
+// app.get("/",(req,res) => {
+//   res.send("Hello World!");
+// })
 
 //使用routes
 app.use("/api/users",users);
