@@ -37,7 +37,6 @@ router.post(
 // @route  GET api/profiles
 // @desc   获取所有信息
 // @access Private
-
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
@@ -57,7 +56,6 @@ router.get(
 // @route  GET api/profiles/:id
 // @desc   获取单个信息
 // @access Private
-
 router.get(
   '/:id',
   passport.authenticate('jwt', { session: false }),
