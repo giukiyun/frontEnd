@@ -72,9 +72,12 @@ export default {
         if (valid) {
           // alert("submit!");
           this.$axios.post("/api/users/login", this.loginUser).then(res => {
-            //登录成功
+            //登录成功,本地存储token
             // console.log('res',res)
             const { token } = res.data;
+            localStorage.setItem("eleToken",token);
+
+
             this.$message({
               message: "账号登录成功",
               type: "success"
