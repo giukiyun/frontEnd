@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <div id="nav"></div>
     <router-view />
   </div>
 </template>
@@ -8,6 +7,8 @@
 import jwt_decode from "jwt-decode";
 export default {
   name: "app",
+  components: {
+  },
   created() {
     if (localStorage.eleToken) {
       const decoded = jwt_decode(localStorage.eleToken);

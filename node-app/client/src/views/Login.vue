@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import jwt_decode from 'jwt-decode'
+import jwt_decode from "jwt-decode";
 export default {
   name: "login",
   components: {},
@@ -73,31 +73,29 @@ export default {
         if (valid) {
           // alert("submit!");
           this.$axios.post("/api/users/login", this.loginUser).then(res => {
-            
             // console.log('res',res)
             // 登录成功,token
             const { token } = res.data;
 
             // 本地存储token
-            localStorage.setItem("eleToken",token);
+            localStorage.setItem("eleToken", token);
 
             // 解析token
-            const decoded = jwt_decode(token);
-            console.log(decoded);
+            const decode = jwt_decode(token);
+            console.log(decode);
 
             // token 存储到vuex中
-            this.$store.dispatch('setAuthenticated',!this.isEmpty(decoded))
-            this.$store.dispatch('setUser',decoded)
+            this.$store.dispatch("setAuthenticated", !this.isEmpty(decode));
+            this.$store.dispatch("setUser", decode);
 
-            this.$message({
-              message: "账号登录成功",
-              type: "success"
-            });
+            // 页面跳转
+            this.$router.push("/index");
           });
+        } else {
+          console.log("error submit!!");
+          return false;
         }
-        // 页面跳转
-        this.$router.push('/index')
-      });
+      })
     },
     isEmpty(value) {
       return (
@@ -114,7 +112,7 @@ export default {
 .login {
   width: 100%;
   height: 100%;
-  background-color: darkblue;
+  background-color: #2d3a4b;
 }
 .form_container {
   width: 370px;

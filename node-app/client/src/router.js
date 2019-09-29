@@ -13,7 +13,12 @@ const router = new Router({
   {
     path: '/index',
     name: 'index',
-    component: () => import('./views/Index.vue')
+    component: () => import('./views/Index.vue'),
+    children: [
+      { path: '', component: () => import('./views/Home.vue') },
+      { path: '/home', name: 'home', component: () => import('./views/Home.vue') },
+      { path: '/infoshow', name: 'infoshow', component: () => import('./views/InfoShow.vue') }      
+    ]
   },
   {
     path: '/register',

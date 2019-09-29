@@ -22,12 +22,12 @@ const getters = {
 }
 const mutations = {
   // 更新认证状态信息
-  [types.SET_AUTHENTIVCATED](state, isAuthenticated) {
+  [types.SET_AUTHENTIVCATED] (state, isAuthenticated) {
     if (isAuthenticated) state.isAuthenticated = isAuthenticated
     else state.isAuthenticated = false
   },
   // 更新用户信息
-  [types.SET_USER](state, user) {
+  [types.SET_USER] (state, user) {
     if (user) state.user = user
     else state.user = {}
   }
@@ -42,6 +42,12 @@ const actions = {
     commit
   }, user) => {
     commit(types.SET_USER, user)
+  },
+  clearCurrentState: ({
+    commit
+  }) => {
+    commit(types.SET_AUTHENTIVCATED, false)
+    commit(types.SET_USER, null)
   }
 }
 export default new Vuex.Store({
