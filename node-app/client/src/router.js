@@ -17,7 +17,8 @@ const router = new Router({
     children: [
       { path: '', component: () => import('./views/Home.vue') },
       { path: '/home', name: 'home', component: () => import('./views/Home.vue') },
-      { path: '/infoshow', name: 'infoshow', component: () => import('./views/InfoShow.vue') }      
+      { path: '/infoshow', name: 'infoshow', component: () => import('./views/InfoShow.vue') },
+      { path: '/fundlist', name: 'fundlist', component: () => import('./views/FundList.vue') }
     ]
   },
   {
