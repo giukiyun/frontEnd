@@ -46,10 +46,10 @@
             <el-input type="textarea" v-model="formData.remark"></el-input>
           </el-form-item>
           <el-form-item class="text_right">
-          <el-button @click="dialog.show = false">取 消</el-button>
-          <el-button type="primary" @click="onSubmit('form')">提 交</el-button>
-        </el-form-item>
-        </el-form>        
+            <el-button @click="dialog.show = false">取 消</el-button>
+            <el-button type="primary" @click="onSubmit('form')">提 交</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </el-dialog>
   </div>
@@ -59,19 +59,10 @@ export default {
   name: "dialog",
   props: {
     dialog: Object,
-    form: Object
+    formData: Object
   },
   data() {
     return {
-      formData: {
-        type: "",
-        describe: "",
-        income: "",
-        expend: "",
-        cash: "",
-        remark: "",
-        id:""
-      },
       format_type_list: [
         "提现",
         "提现手续费",
@@ -95,11 +86,13 @@ export default {
     };
   },
   methods: {
-   onSubmit(form) {
+    onSubmit(form) {
       this.$refs[form].validate(valid => {
         if (valid) {
-          //表单数据验证完成之后，提交数据;         
-          this.$axios.post('/api/profiles/add', this.formData).then(res => {
+          //表单数据验证完成之后，提交数据;
+          const url =
+            this.dialog.option == "add" ? "add" : `edit/${this.formData.id}`;
+          this.$axios.post(`/api/profiles/${url}`, this.formData).then(res => {
             // 操作成功
             this.$message({
               message: "保存成功！",
