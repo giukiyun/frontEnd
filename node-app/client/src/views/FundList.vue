@@ -1,6 +1,6 @@
 <template>
   <div class="fundlist">
-    <div class="fliterform">
+    <div class="filterform">
       <el-form :inline="true" :model="search_data">
         <el-form-item label="按照时间筛选">
           <el-date-picker v-model="search_data.startTime" type="datetime" placeholder="选择开始时间"></el-date-picker>--
@@ -10,7 +10,13 @@
           <el-button type="primary" size="small" icon="view" @click="handleSearch()">筛选</el-button>
         </el-form-item>
         <el-form-item class="btnRight">
-          <el-button type="primary" size="small" icon="view" v-if="user.identity == 'manager'" @click="handleAdd()">添加</el-button>
+          <el-button
+            type="primary"
+            size="small"
+            icon="view"
+            v-if="user.identity == 'manager'"
+            @click="handleAdd()"
+          >添加</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -24,7 +30,7 @@
         style="width: 100%"
       >
         <el-table-column type="index" label="序号" align="center" width="70"></el-table-column>
-        <el-table-column prop="date" :formatter="dateFormat" label="创建时间" width="250" sortable>
+        <el-table-column prop="date"  label="创建时间" width="250" sortable>
           <template slot-scope="scope">
             <el-icon name="time"></el-icon>
             <span style="margin-left:10px">{{scope.row.date | dateFormat}}</span>
@@ -50,13 +56,13 @@
         <el-table-column prop="remark" label="备注" align="center" width="220"></el-table-column>
         <el-table-column prop="operation" align="center" label="操作" fixed="right" width="180">
           <template slot-scope="scope">
-            <el-button 
-              type="warning" 
-              icon="edit" 
-              size="small" 
-              v-if="user.identity == 'manager'" 
+            <el-button
+              type="warning"
+              icon="edit"
+              size="small"
+              v-if="user.identity == 'manager'"
               @click="handleEdit(scope.row)"
-              >编辑</el-button>
+            >编辑</el-button>
             <el-button
               type="danger"
               icon="delete"
@@ -136,8 +142,8 @@ export default {
     this.getProfile();
   },
   filters: {
-    //时间格式化2
-    dateFormat: function(date) {
+    //时间格式化
+    dateFormat:function(date) {
       let t = new Date(date);
       return (
         t.getFullYear() +
@@ -225,34 +231,15 @@ export default {
         return index < page_size;
       });
     },
-    // handleCurrentChange(page) {
-    //   // 获取当前页下标
-    //   let index = this.paginations.page_size * (page - 1);
-    //   // 数据总条数
-    //   let nums = this.paginations.page_size * page;
-
-    //   // 容器
-    //   let tables = [];
-    //   // 遍历,将当前页的数据存放到容器中显示出来
-    //   for (let i = index; i < nums; i++) {
-    //     if (this.allTableData[i]) {
-    //       debugger;
-    //       tables.push(this.allTableData[i]);
-    //     }
-
-    //     this.tableData = tables;
-    //   }
-    // },
     handleCurrentChange(page) {
-      //获取当前页下标
+      // 获取当前页下标
       let index = this.paginations.page_size * (page - 1);
-      //数据的总数
+      // 数据总条数
       let nums = this.paginations.page_size * page;
 
-      //容器
+      // 容器
       let tables = [];
-
-      //遍历,将当前页的数据存放到容器中显示出来
+      // 遍历,将当前页的数据存放到容器中显示出来
       for (let i = index; i < nums; i++) {
         if (this.allTableData[i]) {
           tables.push(this.allTableData[i]);
